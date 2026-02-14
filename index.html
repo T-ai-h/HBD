@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Aomsin 🎂</title>
+
+<style>
+body{
+    margin:0;
+    font-family:'Segoe UI', sans-serif;
+    text-align:center;
+    background:linear-gradient(135deg,#dbeafe,#f0f9ff,#e0f2fe);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+.card{
+    background:white;
+    padding:40px;
+    width:350px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+h1{ color:#2563eb; }
+h2{ color:#1e40af; }
+
+p{
+    color:#374151;
+    line-height:1.6;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 24px;
+    border:none;
+    border-radius:20px;
+    background:#3b82f6;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+.heart{
+    position:fixed;
+    font-size:24px;
+    animation:float 4s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh);}
+    100%{transform:translateY(-10vh);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Happy Birthday 🎂</h1>
+    <h2>ออมสิน 💙</h2>
+    <p>
+        สุขสันต์วันเกิดนะเพื่อนรัก<br>
+        ขอบคุณที่อยู่ข้างกันเสมอ<br>
+        ขอให้ปีนี้เป็นปีที่ดีที่สุดของแก<br>
+        มีความสุขมาก ๆ และสมหวังทุกอย่างเลยนะ ✨
+    </p>
+    <button onclick="startParty()">กดรับคำอวยพร 🎁</button>
+</div>
+
+<script>
+// เล่นโน้ต
+function playTone(freq, duration, delay){
+    setTimeout(function(){
+        let audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let oscillator = audioCtx.createOscillator();
+        oscillator.type = "sine";
+        oscillator.frequency.value = freq;
+        oscillator.connect(audioCtx.destination);
+        oscillator.start();
+
+        setTimeout(()=>{
+            oscillator.stop();
+            audioCtx.close();
+        }, duration);
+    }, delay);
+}
+
+// เพลง Happy Birthday
+function playHappyBirthday(){
+    let notes = [
+        {f:262,d:300},{f:262,d:300},{f:294,d:600},{f:262,d:600},{f:349,d:600},{f:330,d:1200},
+        {f:262,d:300},{f:262,d:300},{f:294,d:600},{f:262,d:600},{f:392,d:600},{f:349,d:1200},
+        {f:262,d:300},{f:262,d:300},{f:523,d:600},{f:440,d:600},{f:349,d:600},{f:330,d:600},{f:294,d:1200},
+        {f:466,d:300},{f:466,d:300},{f:440,d:600},{f:349,d:600},{f:392,d:600},{f:349,d:1200}
+    ];
+
+    let delay=0;
+    notes.forEach(note=>{
+        playTone(note.f,note.d,delay);
+        delay+=note.d+100;
+    });
+}
+
+// เอฟเฟกต์หัวใจ + เล่นเพลง
+function startParty(){
+    playHappyBirthday();
+
+    setInterval(function(){
+        let heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerHTML="💙";
+        heart.style.left=Math.random()*100+"vw";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{heart.remove();},4000);
+    },300);
+}
+</script>
+
+</body>
+</html>
